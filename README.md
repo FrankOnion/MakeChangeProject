@@ -1,5 +1,6 @@
 # MakeChangeProject
-
+leave zero dollars off of the change 0.25 is bad .25 is good
+maybe avoid using loops because we are going to improve it later
 ## How To Run
 
 Initialize variables:
