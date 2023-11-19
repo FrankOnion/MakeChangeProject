@@ -33,34 +33,36 @@ public class CashRegister {
 			System.out.println("Exact payment due recieved. No change needed.");
 		} else {
 			System.out.printf("Change to be given: $%.2f%n", change);
-			// Initialize counter variables
+			// Initialize counter variables and start looking at change in terms of cents to make calculations easy and exact
+			int cents = (int) (change * 100);
+			System.out.println(cents);
 			int twenties, tens, fives, ones, quarters, dimes, nickels, pennies = 0;
 
 			// Helper method to count out currency and update the change
 			// Use integer division to determine the number of each denomination
-			// Update the change accordingly
-			twenties = denominationCounter(change, 20.0);
-			change -= twenties * 20.0;
+			// Update the cents owed accordingly
+			twenties = denominationCounter(cents, 2000);
+			cents -= twenties * 2000;
 
-			tens = denominationCounter(change, 10.0);
-			change -= tens * 10.0;
+			tens = denominationCounter(cents, 1000);
+			cents -= tens * 1000;
 
-			fives = denominationCounter(change, 5.0);
-			change -= fives * 5.0;
+			fives = denominationCounter(cents, 500);
+			cents -= fives * 500;
 
-			ones = denominationCounter(change, 1.0);
-			change -= ones * 1.0;
+			ones = denominationCounter(cents, 100);
+			cents -= ones * 100;
 
-			quarters = denominationCounter(change, 0.25);
-			change -= quarters * 0.25;
+			quarters = denominationCounter(cents, 25);
+			cents -= quarters * 25;
 
-			dimes = denominationCounter(change, 0.1);
-			change -= dimes * 0.1;
+			dimes = denominationCounter(cents, 10);
+			cents -= dimes * 10;
 
-			nickels = denominationCounter(change, 0.05);
-			change -= nickels * 0.05;
+			nickels = denominationCounter(cents, 5);
+			cents -= nickels * 5;
 
-			pennies = denominationCounter(change, 0.01);
+			pennies = denominationCounter(cents, 1);
 
 			// Display the change breakdown
 
@@ -105,9 +107,11 @@ public class CashRegister {
 
 	}
 
-	// Helper method to count out currency and update the change
-	public static int denominationCounter(double change, double value) {
-		int count = (int) (change / value);
+	// Helper method to count out currency and update the cents owed
+	public static int denominationCounter(int cents, int value) {
+		int count = (cents / value);
+		
+
 		return count;
 	}
 
