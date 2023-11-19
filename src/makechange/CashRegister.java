@@ -20,31 +20,24 @@ public class CashRegister {
 		double change = tendered - price;
 
 				  
-//		  # Check if tendered is greater than price
+//		  # Check if tendered is greater than price 
 		if (change < 0) {
-			System.out.println("Insufficient payment. Please add " + (-change));
-			// I would like to also report how much more is needed
+			System.out.println("Insufficient payment. Please ask for $" + (-1 * change) + " more.");
+			// need to make this show as double point precision
 		}
 		else if (change == 0) {
-			System.out.println
+			System.out.println("Exact payment due recieved. No change needed.");
 		}
-		
-//		   IF change < 0 
-//		   		OUTPUT "Error: Insufficient payment."
-//		   	ELSE IF change == 0
-//		   		OUTPUT "Exact payment received. No change needed."
-//		   ELSE ...
-//		  # Initialize counter variables for each denomination
-//		  		twenties = 0
-//		  		tens = 0
-//		  		fives = 0
-//		  		ones = 0
-//		  		quarters = 0
-//		 		dimes = 0
-//		 		nickels = 0
-//		 		pennies = 0
-//		  
+		else {
+			// Initialize counter variables
+			int twenties, tens, fives, ones, quarters, dimes, nickels, pennies = 0;
+		}
+				  
 //		  # create method to count out currency and monitor change still due
+		int denominationCounter(change, double value) {
+			int count = (int)(change/value);
+			return count;
+		}
 //		  	method denominationCounter (denomination, change, value)
 //		  		denomination = INT(change / value)
 //		  		change = change - (denomination * value)
