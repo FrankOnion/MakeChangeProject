@@ -1,3 +1,9 @@
+// currently failing to give the right number of pennies under at times
+// ex input due: 20 , paid: 20.03 output 3 pennies
+//    input due: 3.96 , paid: 20 output 3 pennies (should be 4)
+//
+// possible calc change based on % opperator.... as a fix
+
 package makechange;
 
 import java.util.Scanner;
@@ -23,7 +29,6 @@ public class CashRegister {
 		if (change < 0) {
 			change = -change;
 			System.out.printf("Insufficient payment. Please ask for $%.2f more.", change);
-			// ^ need to make this show as double point precision
 		} else if (change == 0) {
 			System.out.println("Exact payment due recieved. No change needed.");
 		} else {
