@@ -21,12 +21,13 @@ public class CashRegister {
 
 //		  # Check if tendered is greater than price 
 		if (change < 0) {
-			System.out.println("Insufficient payment. Please ask for $" + (-1 * change) + " more.");
-			// need to make this show as double point precision
+			change = -change;
+			System.out.printf("Insufficient payment. Please ask for $%.2f more.", change);
+			// ^ need to make this show as double point precision
 		} else if (change == 0) {
 			System.out.println("Exact payment due recieved. No change needed.");
 		} else {
-
+			System.out.printf("Change to be given: $%.2f%n", change);
 			// Initialize counter variables
 			int twenties, tens, fives, ones, quarters, dimes, nickels, pennies = 0;
 
@@ -57,7 +58,7 @@ public class CashRegister {
 			pennies = denominationCounter(change, 0.01);
 
 			// Display the change breakdown
-			System.out.println("Change to be given:");
+
 			if (twenties > 0) {
 				System.out.println(twenties + " twenty-dollar bill(s)");
 			}
@@ -83,7 +84,16 @@ public class CashRegister {
 				System.out.println(pennies + " penny(pennies)");
 			}
 		}
-		// I'd like to make output changes pluralization rather than using (s)
+		// ^ I'd like to make output changes pluralization rather than using (s)
+		
+		// ^ Other improvements: loop program until closed, to support multiple
+		// transactions
+		
+		// ^ allow updates for the amount owed in the event that a customer adds an item
+		// after the transaction has begun
+		
+		// ^ allow update to the total paid if the customer adds money after finding
+		// they are short on payment
 
 		// Close the scanner
 		scanner.close();
