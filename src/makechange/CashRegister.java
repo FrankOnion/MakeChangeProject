@@ -8,10 +8,8 @@ import java.util.Scanner;
  * 
  *  loop prog for multiple transactions
  *  
- *  	Output w/ dynamic pluralization rather than using (s)
- *  
  *  allow updates for the amount owed in the event that a customer adds an item after the transaction has begun
-*  allow update to the total paid if the customer adds money after finding they are short on payment
+ *  allow update to the total paid if the customer adds money after finding they are short on payment
  * 
  * 
  */
@@ -81,39 +79,77 @@ public class CashRegister {
 
 			if (twenties > 0) {
 				System.out.print(twenties + " twenty-dollar bill");
+				if (twenties > 1) {
+					System.out.println("s");
+				} else {
+					System.out.print("\n");
+				}
 			}
-			if (twenties > 1) {
-				System.out.println("s");
-			} else {
-				System.out.print("\n");
+			
+			if (tens> 0) {
+				System.out.print(tens + " ten-dollar bill");
+				if (tens > 1) {
+					System.out.println("s");
+				} else {
+					System.out.print("\n");
+				}
 			}
-			if (tens > 0) {
-				System.out.println(tens + " ten-dollar bill(s)");
-			}
+			
 			if (fives > 0) {
-				System.out.println(fives + " five-dollar bill(s)");
+				System.out.print(twenties + " five-dollar bill");
+				if (fives > 1) {
+					System.out.println("s");
+				} else {
+					System.out.print("\n");
+				}
 			}
+			
 			if (ones > 0) {
-				System.out.println(ones + " one-dollar bill(s)");
+				System.out.print(twenties + " one-dollar bill");
+				if (ones > 1) {
+					System.out.println("s");
+				} else {
+					System.out.print("\n");
+				}
 			}
+			
 			if (quarters > 0) {
-				System.out.println(quarters + " quarter(s)");
+				System.out.print(twenties + " quarter");
+				if (quarters > 1) {
+					System.out.println("s");
+				} else {
+					System.out.print("\n");
+				}
 			}
+			
 			if (dimes > 0) {
-				System.out.println(dimes + " dime(s)");
+				System.out.print(dimes + " dime");
+				if (dimes > 1) {
+					System.out.println("s");
+				} else {
+					System.out.print("\n");
+				}
 			}
+			
 			if (nickels > 0) {
-				System.out.println(nickels + " nickel(s)");
+				System.out.print(twenties + " nickel");
+				if (nickels > 1) {
+					System.out.println("s");
+				} else {
+					System.out.print("\n");
+				}
 			}
+			
 			if (pennies > 0) {
-				System.out.println(pennies + " penny(pennies)");
-			}
-		}
-
+				System.out.print(twenties + " penny");
+				if (twenties > 1) {
+					System.out.println(" pennies");
+				} 
+			}}
 		// Close the scanner
-		scanner.close();
+		scanner.close();}
 
-	}
+	
 
 	// Helper method to count out currency and update the cents owed
 	public static int denominationCounter(int cents, int value) {
