@@ -1,13 +1,20 @@
-// currently failing to give the right number of pennies under at times
-// ex input due: 20 , paid: 20.03 output 3 pennies
-//    input due: 3.96 , paid: 20 output 3 pennies (should be 4)
-//
-// possible calc change based on % opperator.... as a fix
 
 package makechange;
 
 import java.util.Scanner;
 
+/*	Future improvements:
+ * Reject invalid user input such as strings
+ * 
+ *  loop prog for multiple transactions
+ *  
+ *  	Output w/ dynamic pluralization rather than using (s)
+ *  
+ *  allow updates for the amount owed in the event that a customer adds an item after the transaction has begun
+*  allow update to the total paid if the customer adds money after finding they are short on payment
+ * 
+ * 
+ */
 public class CashRegister {
 
 	public static void main(String[] args) {
@@ -24,23 +31,29 @@ public class CashRegister {
 
 //		  # Calculate change change = tendered - price
 		double change = tendered - price;
+		int cents = (int) (change * 100);
 
 //		  # Check if tendered is greater than price 
 		if (change < 0) {
 			change = -change;
-			System.out.printf("Insufficient payment. Please ask for $%.2f more.", change);
+			cents = -cents;
+			if (cents < 100) {
+				System.out.printf("Insufficient payment. Please ask for %d¢ more.", cents);
+			} else {
+				System.out.printf("Insufficient payment. Please ask for $%.2f more.", change);
+			}
 		} else if (change == 0) {
 			System.out.println("Exact payment due recieved. No change needed.");
+		} else if (cents < 100) {
+			System.out.printf("Change to be given: %d¢.", cents);
 		} else {
 			System.out.printf("Change to be given: $%.2f%n", change);
-			// Initialize counter variables and start looking at change in terms of cents to make calculations easy and exact
-			int cents = (int) (change * 100);
-			System.out.println(cents);
+			// Initialize counter variables and start looking at change in terms of cents to
+			// make calculations easy and exact
+
 			int twenties, tens, fives, ones, quarters, dimes, nickels, pennies = 0;
 
-			// Helper method to count out currency and update the change
-			// Use integer division to determine the number of each denomination
-			// Update the cents owed accordingly
+			// Use denominationCounter() method to count out currency
 			twenties = denominationCounter(cents, 2000);
 			cents -= twenties * 2000;
 
@@ -67,7 +80,12 @@ public class CashRegister {
 			// Display the change breakdown
 
 			if (twenties > 0) {
-				System.out.println(twenties + " twenty-dollar bill(s)");
+				System.out.print(twenties + " twenty-dollar bill");
+			}
+			if (twenties > 1) {
+				System.out.println("s");
+			} else {
+				System.out.print("\n");
 			}
 			if (tens > 0) {
 				System.out.println(tens + " ten-dollar bill(s)");
@@ -91,16 +109,6 @@ public class CashRegister {
 				System.out.println(pennies + " penny(pennies)");
 			}
 		}
-		// ^ I'd like to make output changes pluralization rather than using (s)
-		
-		// ^ Other improvements: loop program until closed, to support multiple
-		// transactions
-		
-		// ^ allow updates for the amount owed in the event that a customer adds an item
-		// after the transaction has begun
-		
-		// ^ allow update to the total paid if the customer adds money after finding
-		// they are short on payment
 
 		// Close the scanner
 		scanner.close();
@@ -110,7 +118,6 @@ public class CashRegister {
 	// Helper method to count out currency and update the cents owed
 	public static int denominationCounter(int cents, int value) {
 		int count = (cents / value);
-		
 
 		return count;
 	}
