@@ -1,114 +1,69 @@
-// currently failing to give the right number of pennies under at times
-// ex input due: 20 , paid: 20.03 output 3 pennies
-//    input due: 3.96 , paid: 20 output 3 pennies (should be 4)
-//
-// possible calc change based on % opperator.... as a fix
-
 package makechange;
 
 import java.util.Scanner;
 
 public class CashRegister {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-		Scanner scanner = new Scanner(System.in);
+        // Prompt the clerk for the total amount due
+        System.out.print("Total amount due: ");
+        double price = scanner.nextDouble() * 100;
 
-//		  # Prompt clerk for total due
-		System.out.print("Total amount due: ");
-		double price = scanner.nextDouble();
+        // Prompt the clerk for the amount paid by the customer
+        System.out.print("Total paid by customer: ");
+        double tendered = scanner.nextDouble() * 100;
 
-//		  # Prompt clerk for total paid
-		System.out.print("Total paid by customer: ");
-		double tendered = scanner.nextDouble();
+        // Calculate change
+        int change = (int) (tendered - price);
 
-//		  # Calculate change change = tendered - price
-		double change = tendered - price;
+        if (change == 0) {
+            System.out.println("Exact payment due received. No change needed.");
+        } else if (change > 0) {
+            if (change < 100) {
+                System.out.printf("Change to be given: %d¢.%n", change);
+            } else {
+                System.out.printf("Change to be given: $%d.%02d%n", change / 100, change % 100);
+            }
 
-//		  # Check if tendered is greater than price 
-		if (change < 0) {
-			change = -change;
-			System.out.printf("Insufficient payment. Please ask for $%.2f more.", change);
-		} else if (change == 0) {
-			System.out.println("Exact payment due recieved. No change needed.");
-		} else {
-			System.out.printf("Change to be given: $%.2f%n", change);
-			// Initialize counter variables
-			int twenties, tens, fives, ones, quarters, dimes, nickels, pennies = 0;
+            // Calculate and display the change breakdown
+            displayChangeBreakdown(change);
+        } else if (change < 0) {
+            change = -change;
+            if (change < 100) {
+                System.out.printf("Insufficient payment. Please ask for %d¢ more.", change);
+            } else {
+                System.out.printf("Insufficient payment. Please ask for $%d.%02d more.", change / 100, change % 100);
+            }
+        }
 
-			// Helper method to count out currency and update the change
-			// Use integer division to determine the number of each denomination
-			// Update the change accordingly
-			twenties = denominationCounter(change, 20.0);
-			change -= twenties * 20.0;
+        // Close the scanner
+        scanner.close();
+    }
 
-			tens = denominationCounter(change, 10.0);
-			change -= tens * 10.0;
+    // Helper method to display denomination properly
+    public static void displayDenomination(String denomination, int count) {
+        if (count > 0) {
+            System.out.print(count + " " + denomination);
+            if (count > 1) {
+                System.out.println("s");
+            } else {
+                System.out.println();
+            }
+        }
+    }
 
-			fives = denominationCounter(change, 5.0);
-			change -= fives * 5.0;
+    // Helper method to calculate and display the change breakdown
+    public static void displayChangeBreakdown(int change) {
+        int[] denominations = { 2000, 1000, 500, 100, 25, 10, 5, 1 };
+        String[] names = { "twenty-dollar bill", "ten-dollar bill", "five-dollar bill", "one-dollar bill", "quarter",
+                "dime", "nickel", "penny" };
 
-			ones = denominationCounter(change, 1.0);
-			change -= ones * 1.0;
-
-			quarters = denominationCounter(change, 0.25);
-			change -= quarters * 0.25;
-
-			dimes = denominationCounter(change, 0.1);
-			change -= dimes * 0.1;
-
-			nickels = denominationCounter(change, 0.05);
-			change -= nickels * 0.05;
-
-			pennies = denominationCounter(change, 0.01);
-
-			// Display the change breakdown
-
-			if (twenties > 0) {
-				System.out.println(twenties + " twenty-dollar bill(s)");
-			}
-			if (tens > 0) {
-				System.out.println(tens + " ten-dollar bill(s)");
-			}
-			if (fives > 0) {
-				System.out.println(fives + " five-dollar bill(s)");
-			}
-			if (ones > 0) {
-				System.out.println(ones + " one-dollar bill(s)");
-			}
-			if (quarters > 0) {
-				System.out.println(quarters + " quarter(s)");
-			}
-			if (dimes > 0) {
-				System.out.println(dimes + " dime(s)");
-			}
-			if (nickels > 0) {
-				System.out.println(nickels + " nickel(s)");
-			}
-			if (pennies > 0) {
-				System.out.println(pennies + " penny(pennies)");
-			}
-		}
-		// ^ I'd like to make output changes pluralization rather than using (s)
-		
-		// ^ Other improvements: loop program until closed, to support multiple
-		// transactions
-		
-		// ^ allow updates for the amount owed in the event that a customer adds an item
-		// after the transaction has begun
-		
-		// ^ allow update to the total paid if the customer adds money after finding
-		// they are short on payment
-
-		// Close the scanner
-		scanner.close();
-
-	}
-
-	// Helper method to count out currency and update the change
-	public static int denominationCounter(double change, double value) {
-		int count = (int) (change / value);
-		return count;
-	}
-
+        for (int i = 0; i < denominations.length; i++) {
+            int count = change / denominations[i];
+            change %= denominations[i];
+            displayDenomination(names[i], count);
+        }
+    }
 }

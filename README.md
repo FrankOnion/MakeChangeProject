@@ -31,6 +31,7 @@ In the cash register we will calculate the amount of change returned to a custom
 	* loop prog for multiple transactions
 	* allow updates for the amount owed in the event that a customer adds an item after the transaction has begun
 	* allow update to the total paid if the customer adds money after finding they are short on payment
+	Done
 	* possibly use an array for the currency allowing for simpler more readable code
 	* use a method for currency dole out
 
